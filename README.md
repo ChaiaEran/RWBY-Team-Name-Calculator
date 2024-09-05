@@ -1,0 +1,3 @@
+A site to calculate RWBY team names! One of these was already made by [sennagehenna](https://github.com/sennagehenna) right here on GitHub, and I used the same [colour list](https://github.com/meodai/color-names) as she did, but I noticed that her list had one major problem: It didn't account for letter substitutions, like how Weiss puts the W in RWBY, despite the colour Ruby not having a W in it, or how "Coffee" has neither a V nor a Y in it. (Sorry, Velvet and Yatsu!)
+
+So, I decided to make my own version! If you want to host it locally you can literally just download the files and open the HTML file, no need for any fancy deployments. I'll probably find somewhere to host it, too.
