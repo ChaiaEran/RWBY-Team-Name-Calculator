@@ -58,14 +58,10 @@ async function calculateNames() {
     const data = Object.fromEntries(new FormData(form))
     const forceLeader = data.forceleader !== undefined
     const singleWord = data.singleword !== undefined
-    const member1 = [data.f1, data.l1]
-    const i1 = [member1[0][0], member1[1][0]]
-    const member2 = [data.f2, data.l2]
-    const i2 = [member2[0][0], member2[1][0]]
-    const member3 = [data.f3, data.l3]
-    const i3 = [member3[0][0], member3[1][0]]
-    const member4 = [data.f4, data.l4]
-    const i4 = [member4[0][0], member4[1][0]]
+    const initial1 = [data.f1[0], data.l1[0]]
+    const initial2 = [data.f2[0], data.l2[0]]
+    const initial3 = [data.f3[0], data.l3[0]]
+    const initial4 = [data.f4[0], data.l4[0]]
     const res = await fetch('https://raw.githubusercontent.com/meodai/color-names/master/dist/colornames.json')
     if (res.ok) {
         let colourList = await res.json()
@@ -74,48 +70,48 @@ async function calculateNames() {
         }
         let teamList
         if (forceLeader) {
-            const leaderList = colourList.filter((colour) => (leaderFilter(i1[0].toLowerCase(), colour.name)) || (leaderFilter(i1[1].toLowerCase(), colour.name)))
+            const leaderList = colourList.filter((colour) => (leaderFilter(initial1[0].toLowerCase(), colour.name)) || (leaderFilter(initial1[1].toLowerCase(), colour.name)))
             teamList = leaderList.filter((colour) =>
-                ((teamFilter(i2[0].toLowerCase(), colour.name)) || (teamFilter(i2[1].toLowerCase(), colour.name))) &&
-                ((teamFilter(i3[0].toLowerCase(), colour.name)) || (teamFilter(i3[1].toLowerCase(), colour.name))) &&
-                ((teamFilter(i4[0].toLowerCase(), colour.name)) || (teamFilter(i4[1].toLowerCase(), colour.name)))
+                ((teamFilter(initial2[0].toLowerCase(), colour.name)) || (teamFilter(initial2[1].toLowerCase(), colour.name))) &&
+                ((teamFilter(initial3[0].toLowerCase(), colour.name)) || (teamFilter(initial3[1].toLowerCase(), colour.name))) &&
+                ((teamFilter(initial4[0].toLowerCase(), colour.name)) || (teamFilter(initial4[1].toLowerCase(), colour.name)))
             )
         } else {
             const leaderList = colourList.filter((colour) =>
-                ((leaderFilter(i1[0].toLowerCase(), colour.name)) || (leaderFilter(i1[1].toLowerCase(), colour.name))) ||
-                ((leaderFilter(i2[0].toLowerCase(), colour.name)) || (leaderFilter(i2[1].toLowerCase(), colour.name))) ||
-                ((leaderFilter(i3[0].toLowerCase(), colour.name)) || (leaderFilter(i3[1].toLowerCase(), colour.name))) ||
-                ((leaderFilter(i4[0].toLowerCase(), colour.name)) || (leaderFilter(i4[1].toLowerCase(), colour.name)))
+                ((leaderFilter(initial1[0].toLowerCase(), colour.name)) || (leaderFilter(initial1[1].toLowerCase(), colour.name))) ||
+                ((leaderFilter(initial2[0].toLowerCase(), colour.name)) || (leaderFilter(initial2[1].toLowerCase(), colour.name))) ||
+                ((leaderFilter(initial3[0].toLowerCase(), colour.name)) || (leaderFilter(initial3[1].toLowerCase(), colour.name))) ||
+                ((leaderFilter(initial4[0].toLowerCase(), colour.name)) || (leaderFilter(initial4[1].toLowerCase(), colour.name)))
             )
             teamList = leaderList.filter((colour) =>
-                ((teamFilter(i1[0].toLowerCase(), colour.name)) || (teamFilter(i1[1].toLowerCase(), colour.name))) &&
-                ((teamFilter(i2[0].toLowerCase(), colour.name)) || (teamFilter(i2[1].toLowerCase(), colour.name))) &&
-                ((teamFilter(i3[0].toLowerCase(), colour.name)) || (teamFilter(i3[1].toLowerCase(), colour.name))) &&
-                ((teamFilter(i4[0].toLowerCase(), colour.name)) || (teamFilter(i4[1].toLowerCase(), colour.name)))
+                ((teamFilter(initial1[0].toLowerCase(), colour.name)) || (teamFilter(initial1[1].toLowerCase(), colour.name))) &&
+                ((teamFilter(initial2[0].toLowerCase(), colour.name)) || (teamFilter(initial2[1].toLowerCase(), colour.name))) &&
+                ((teamFilter(initial3[0].toLowerCase(), colour.name)) || (teamFilter(initial3[1].toLowerCase(), colour.name))) &&
+                ((teamFilter(initial4[0].toLowerCase(), colour.name)) || (teamFilter(initial4[1].toLowerCase(), colour.name)))
             )
         }
         teamList.forEach((team) => {
             let mem1Pos
             if(forceLeader){
-                if(retrieveLeader(i1[0].toLowerCase(), team.name)){
-                    mem1Pos = {index: 0, initial: i1[0].toUpperCase()}
-                } else if(retrieveLeader(i1[1].toLowerCase(), team.name)){
-                    mem1Pos = {index: 0, initial: i1[1].toUpperCase()}
+                if(retrieveLeader(initial1[0].toLowerCase(), team.name)){
+                    mem1Pos = {index: 0, initial: initial1[0].toUpperCase()}
+                } else if(retrieveLeader(initial1[1].toLowerCase(), team.name)){
+                    mem1Pos = {index: 0, initial: initial1[1].toUpperCase()}
                 }
             } else {
-                mem1Pos = [{index: retrieveIndex(i1[0].toLowerCase(), team.name), initial: i1[0].toUpperCase()}, {index: retrieveIndex(i1[1].toLowerCase(), team.name), initial: i1[1].toUpperCase()}]
+                mem1Pos = [{index: retrieveIndex(initial1[0].toLowerCase(), team.name), initial: initial1[0].toUpperCase()}, {index: retrieveIndex(initial1[1].toLowerCase(), team.name), initial: initial1[1].toUpperCase()}]
                 mem1Pos = mem1Pos.filter((x) => x.index !== -1)
-                mem1Pos = mem1Pos.reduce((comparator, currentValue) => comparator.index < currentValue ? comparator : currentValue)
+                mem1Pos = mem1Pos.reduce((comparator, currentValue) => comparator.index < currentValue.index ? comparator : currentValue)
             }
-            let mem2Pos = [{index: retrieveIndex(i2[0].toLowerCase(), team.name), initial: i2[0].toUpperCase()}, {index: retrieveIndex(i2[1].toLowerCase(), team.name), initial: i2[1].toUpperCase()}]
+            let mem2Pos = [{index: retrieveIndex(initial2[0].toLowerCase(), team.name), initial: initial2[0].toUpperCase()}, {index: retrieveIndex(initial2[1].toLowerCase(), team.name), initial: initial2[1].toUpperCase()}]
             mem2Pos = mem2Pos.filter((x) => x.index !== -1)
-            mem2Pos = mem2Pos.reduce((comparator, currentValue) => comparator.index < currentValue ? comparator : currentValue)
-            let mem3Pos = [{index: retrieveIndex(i3[0].toLowerCase(), team.name), initial: i3[0].toUpperCase()}, {index: retrieveIndex(i3[1].toLowerCase(), team.name), initial: i3[1].toUpperCase()}]
+            mem2Pos = mem2Pos.reduce((comparator, currentValue) => comparator.index < currentValue.index ? comparator : currentValue)
+            let mem3Pos = [{index: retrieveIndex(initial3[0].toLowerCase(), team.name), initial: initial3[0].toUpperCase()}, {index: retrieveIndex(initial3[1].toLowerCase(), team.name), initial: initial3[1].toUpperCase()}]
             mem3Pos = mem3Pos.filter((x) => x.index !== -1)
-            mem3Pos = mem3Pos.reduce((comparator, currentValue) => comparator.index < currentValue ? comparator : currentValue)
-            let mem4Pos = [{index: retrieveIndex(i4[0].toLowerCase(), team.name), initial: i4[0].toUpperCase()}, {index: retrieveIndex(i4[1].toLowerCase(), team.name), initial: i4[1].toUpperCase()}]
+            mem3Pos = mem3Pos.reduce((comparator, currentValue) => comparator.index < currentValue.index ? comparator : currentValue)
+            let mem4Pos = [{index: retrieveIndex(initial4[0].toLowerCase(), team.name), initial: initial4[0].toUpperCase()}, {index: retrieveIndex(initial4[1].toLowerCase(), team.name), initial: initial4[1].toUpperCase()}]
             mem4Pos = mem4Pos.filter((x) => x.index !== -1)
-            mem4Pos = mem4Pos.reduce((comparator, currentValue) => comparator.index < currentValue ? comparator : currentValue)
+            mem4Pos = mem4Pos.reduce((comparator, currentValue) => comparator.index < currentValue.index ? comparator : currentValue)
             teamOrder = [mem1Pos, mem2Pos, mem3Pos, mem4Pos]
             teamOrder.sort((a, b) => a.index - b.index)
             teamName = teamOrder.map((a) => a.initial).join('')
