@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RWBY Team Name Calculator</title>
+        <script src="calculator.js"></script>
+    </head>
+    <body>
+        <h1>RWBY Team Name Calculator</h1>
+        <p>Write down four names in the forms below, then click the search button and we'll find some team names for you!</p>
+        <p>Note, however, that determining <em>relevant</em> consonsants is <em>way</em> harder than just finding matching letters, so colours may not be suitable for your team name (but hey, Team CRDL doesn't have an N in there, so...) Also, names with the same initial may get folded together, like with Team SSSN.</p>
+        <form id="teamdata">
+            <div>
+                <label for="f1">Member 1</label>
+                <input type="text" name="f1" id="f1">
+                <input type="text" name="l1" id="l1">
+                <label for="lead">Force Leader</label>
+                <input type="checkbox" name="forceleader" id="lead">
+            </div>
+            <div>
+                <label for="f2">Member 2</label>
+                <input type="text" name="f2" id="f2">
+                <input type="text" name="l2" id="l2">
+            </div>
+            <div>
+                <label for="f3">Member 3</label>
+                <input type="text" name="f3" id="f3">
+                <input type="text" name="l3" id="l3">
+            </div>
+            <div>
+                <label for="f4">Member 4</label>
+                <input type="text" name="f4" id="f4">
+                <input type="text" name="l4" id="l4">
+            </div>
+            <label for="word">Single-Word Colours</label>
+            <input type="checkbox" name="singleword" id="word">
+        </form>
+        <button onclick="calculateNames()">Calculate Names</button>
+        <hr>
+        <table>
+            <tbody id="teamspace">
+
+            </tbody>
+        </table>
+    </body>
+</html>
