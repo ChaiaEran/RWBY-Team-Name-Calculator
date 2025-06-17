@@ -62,7 +62,7 @@ async function calculateNames() {
     const initial2 = [data.f2[0], data.l2[0]]
     const initial3 = [data.f3[0], data.l3[0]]
     const initial4 = [data.f4[0], data.l4[0]]
-    const res = await fetch('https://raw.githubusercontent.com/meodai/color-names/master/dist/colornames.json')
+    const res = await fetch('https://unpkg.com/color-name-list/dist/colornames.json')
     if (res.ok) {
         let colourList = await res.json()
         if(singleWord){
